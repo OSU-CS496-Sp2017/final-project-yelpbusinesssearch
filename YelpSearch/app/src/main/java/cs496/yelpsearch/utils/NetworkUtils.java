@@ -16,6 +16,7 @@ public class NetworkUtils {
     public static String doHTTPGet(String url) throws IOException {
         Request request = new Request.Builder()
                 .url(url)
+                .header("Bearer","_PCTiW0srvjNxUr_MHaSVgozsSJOUDp_07CvI71Vk9XwZAnmsLB9KeLJiXObNGyIGNYMiaa5ZTT4jPWFgFRYY-Z0QRvk0siHq5QDCwS7sjyxXGd0hVACENOBv0E3WXYx")
                 .build();
         Response response = mHTTPClient.newCall(request).execute();
 
