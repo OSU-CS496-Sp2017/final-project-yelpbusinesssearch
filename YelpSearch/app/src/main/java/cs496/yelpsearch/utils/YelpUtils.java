@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.TimeZone;
+import java.io.Serializable;
 
 /**
  * Created by benny on 5/31/2017.
@@ -17,20 +18,29 @@ import java.util.TimeZone;
 
 public class YelpUtils {
 
-    public static String buildForecastURL(String forecastLocation, String temperatureUnits) {
+    private final static String YELP_SEARCH_BASE_URL = "https://api.yelp.com/v3/businesses/search";
+    private final static String YELP_SEARCH_LOCATION_PARAM = "location";
+    private final static String YELP_SEARCH_BUSINESS_PARAM = "locale";
+    private final static String YELP_SEARCH_IN_LOCATION = "Corvallis, OR";
 
-        private final static String YELP_SEARCH_BASE_URL = "https://api.yelp.com/v3/businesses/search";
-        private final static String YELP_SEARCH_LOCATION_PARAM = "location";
-        private final static String YELP_SEARCH_BUSINESS_PARAM = "locale";
-        private final static String YELP_SEARCH_IN_LOCATION = "Corvallis, OR";
 
-        public static class SearchResult implements Serializable {
-            public static final String EXTRA_SEARCH_RESULT = "YelpUtils.SearchResult";
-            public String location;
-            public String ratings;
-            public String htmlURL;
-            public int stars;
-        }
+
+    public static class SearchResult implements Serializable {
+        public static final String EXTRA_SEARCH_RESULT = "YelpUtils.SearchResult";
+        public String locale;
+        public String location;
+        public String rating;
+        public String phone;
+        public String price;
+        public String review_count;
+        public String image_url;
+        public String address1;
+        public String city;
+        public String state;
+        public String zip_code;
+        public boolean is_closed;
+
+    }
 
     public static String buildYelpSearchURL(String locale, String location) {
 
@@ -59,10 +69,10 @@ public class YelpUtils {
             for (int i = 0; i < searchResultsItems.length(); i++) {
                 SearchResult searchResult = new SearchResult();
                 JSONObject searchResultItem = searchResultsItems.getJSONObject(i);
-                searchResult.fullName = searchResultItem.getString("full_name");
-                searchResult.description = searchResultItem.getString("description");
-                searchResult.htmlURL = searchResultItem.getString("html_url");
-                searchResult.stars = searchResultItem.getInt("stargazers_count");
+                searchResult.location = searchResultItem.getString("location");
+                searchResult.rating = searchResultItem.getString("rating");
+                searchResult.phone = searchResultItem.getString("phone");
+                searchResult.price = searchResultItem.getString("price");
                 searchResultsList.add(searchResult);
             }
             return searchResultsList;
