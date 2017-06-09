@@ -19,69 +19,54 @@ public class YelpUtils {
 
     public static String buildForecastURL(String forecastLocation, String temperatureUnits) {
 
-        Uri.Builder builder = Uri.parse(OWM_FORECAST_BASE_URL).buildUpon(); //change this to Request.Builder();
+        private final static String YELP_SEARCH_BASE_URL = "https://api.yelp.com/v3/businesses/search";
+        private final static String YELP_SEARCH_LOCATION_PARAM = "location";
+        private final static String YELP_SEARCH_BUSINESS_PARAM = "locale";
+        private final static String YELP_SEARCH_IN_LOCATION = "Corvallis, OR";
 
-        if (!temperatureUnits.equals("")) {
-            builder.appendQueryParameter(OWM_FORECAST_UNITS_PARAM, temperatureUnits);
+        public static class SearchResult implements Serializable {
+            public static final String EXTRA_SEARCH_RESULT = "YelpUtils.SearchResult";
+            public String location;
+            public String ratings;
+            public String htmlURL;
+            public int stars;
         }
 
-        if (!forecastLocation.equals("")) {
-            builder.appendQueryParameter(OWM_FORECAST_QUERY_PARAM, forecastLocation);
-            weatherLocation = forecastLocation;
+    public static String buildYelpSearchURL(String locale, String location) {
+
+        Uri.Builder builder = Uri.parse(YELP_SEARCH_BASE_URL).buildUpon();
+
+        if (location.equals("")) {
+            builder.appendQueryParameter(YELP_SEARCH_LOCATION_PARAM, YELP_SEARCH_IN_LOCATION);
+        }
+        else {
+            builder.appendQueryParameter(YELP_SEARCH_LOCATION_PARAM, location);
         }
 
-        builder.appendQueryParameter(OWM_FORECAST_APPID_PARAM, OWM_FORECAST_APPID);
-
-        if (temperatureUnits.equals("imperial")){
-            weatherUnits = "\u00b0F";
+        if (!locale.equals("")) {
+            builder.appendQueryParameter(YELP_SEARCH_BUSINESS_PARAM, locale);
         }
-        if (temperatureUnits.equals("kelvin")){
-            weatherUnits = "\u00b0K";
-        }
-        if (temperatureUnits.equals("metric")){
-            weatherUnits = "\u00b0C";
-        }
-
-
 
         return builder.build().toString();
     }
 
-    public static ArrayList<ForecastItem> parseForecastJSON(String forecastJSON) {
+    public static ArrayList<SearchResult> parseYelpSearchResultsJSON(String searchResultsJSON) {
         try {
-            JSONObject forecastObj = new JSONObject(forecastJSON);
-            JSONArray forecastList = forecastObj.getJSONArray("list");
-            SimpleDateFormat dateParser = new SimpleDateFormat(OWM_FORECAST_DATE_FORMAT);
-            dateParser.setTimeZone(TimeZone.getTimeZone(OWM_FORECAST_TIME_ZONE));
+            JSONObject searchResultsObj = new JSONObject(searchResultsJSON);
+            JSONArray searchResultsItems = searchResultsObj.getJSONArray("items");
 
-            ArrayList<ForecastItem> forecastItemsList = new ArrayList<ForecastItem>();
-            for (int i = 0; i < forecastList.length(); i++) {
-                ForecastItem forecastItem = new ForecastItem();
-                JSONObject forecastListElem = forecastList.getJSONObject(i);
-
-                String dateString = forecastListElem.getString("dt_txt");
-                forecastItem.dateTime = dateParser.parse(dateString);
-
-                forecastItem.description = forecastListElem.getJSONArray("weather").getJSONObject(0).getString("main");
-
-                JSONObject mainObj = forecastListElem.getJSONObject("main");
-                forecastItem.temperature = Math.round(mainObj.getDouble("temp"));
-                forecastItem.temperatureLow = Math.round(mainObj.getDouble("temp_min"));
-                forecastItem.temperatureHigh = Math.round(mainObj.getDouble("temp_max"));
-                forecastItem.humidity = Math.round(mainObj.getDouble("humidity"));
-
-                JSONObject windObj = forecastListElem.getJSONObject("wind");
-                forecastItem.windSpeed = Math.round(windObj.getDouble("speed"));
-                forecastItem.windDirection = windAngleToDirection(windObj.getDouble("deg"));
-
-                forecastItemsList.add(forecastItem);
+            ArrayList<SearchResult> searchResultsList = new ArrayList<SearchResult>();
+            for (int i = 0; i < searchResultsItems.length(); i++) {
+                SearchResult searchResult = new SearchResult();
+                JSONObject searchResultItem = searchResultsItems.getJSONObject(i);
+                searchResult.fullName = searchResultItem.getString("full_name");
+                searchResult.description = searchResultItem.getString("description");
+                searchResult.htmlURL = searchResultItem.getString("html_url");
+                searchResult.stars = searchResultItem.getInt("stargazers_count");
+                searchResultsList.add(searchResult);
             }
-            return forecastItemsList;
+            return searchResultsList;
         } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        } catch (ParseException e) {
-            e.printStackTrace();
             return null;
         }
     }
