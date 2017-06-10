@@ -20,14 +20,14 @@ public class YelpUtils {
 
     private final static String YELP_SEARCH_BASE_URL = "https://api.yelp.com/v3/businesses/search";
     private final static String YELP_SEARCH_LOCATION_PARAM = "location";
-    private final static String YELP_SEARCH_BUSINESS_PARAM = "locale";
-    private final static String YELP_SEARCH_IN_LOCATION = "Corvallis, OR";
+    private final static String YELP_SEARCH_BUSINESS_PARAM = "term";
+    private final static String YELP_SEARCH_IN_LOCATION = "corvallis";
 
 
 
     public static class SearchResult implements Serializable {
         public static final String EXTRA_SEARCH_RESULT = "YelpUtils.SearchResult";
-        public String locale;
+        public String term;
         public String location;
         public String rating;
         public String phone;
@@ -42,7 +42,7 @@ public class YelpUtils {
 
     }
 
-    public static String buildYelpSearchURL(String locale, String location) {
+    public static String buildYelpSearchURL(String term, String location) {
 
         Uri.Builder builder = Uri.parse(YELP_SEARCH_BASE_URL).buildUpon();
 
@@ -53,8 +53,8 @@ public class YelpUtils {
             builder.appendQueryParameter(YELP_SEARCH_LOCATION_PARAM, location);
         }
 
-        if (!locale.equals("")) {
-            builder.appendQueryParameter(YELP_SEARCH_BUSINESS_PARAM, locale);
+        if (!term.equals("")) {
+            builder.appendQueryParameter(YELP_SEARCH_BUSINESS_PARAM, term);
         }
 
         return builder.build().toString();

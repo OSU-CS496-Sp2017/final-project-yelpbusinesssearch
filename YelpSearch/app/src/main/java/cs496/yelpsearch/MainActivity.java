@@ -145,6 +145,8 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void deliverResult(String data) {
+                Log.d(TAG, "AsyncTaskLoader's delivering results data");
+                Log.d(TAG, data);
                 mSearchResultsJSON = data;
                 super.deliverResult(data);
             }

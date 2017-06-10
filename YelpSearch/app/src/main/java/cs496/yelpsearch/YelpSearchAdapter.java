@@ -62,7 +62,7 @@ public class YelpSearchAdapter extends RecyclerView.Adapter<YelpSearchAdapter.Se
             }
 
             public void bind(YelpUtils.SearchResult searchResult) {
-                mSearchResultTV.setText(searchResult.locale);
+                mSearchResultTV.setText(searchResult.term);
             }
 
             @Override
