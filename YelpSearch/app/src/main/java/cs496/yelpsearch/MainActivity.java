@@ -93,7 +93,10 @@ public class MainActivity extends AppCompatActivity
         String location = sharedPreferences.getString(getString(R.string.pref_location_key),
                 getString(R.string.pref_location_default));
 
-        String YelpSearchUrl = YelpUtils.buildYelpSearchURL(searchQuery, location);
+        String limit = sharedPreferences.getString(getString(R.string.pref_limit_key),
+                getString(R.string.pref_limit_default));
+
+        String YelpSearchUrl = YelpUtils.buildYelpSearchURL(searchQuery, location, limit);
 
         Bundle argsBundle = new Bundle();
         argsBundle.putString(SEARCH_URL_KEY, YelpSearchUrl);
