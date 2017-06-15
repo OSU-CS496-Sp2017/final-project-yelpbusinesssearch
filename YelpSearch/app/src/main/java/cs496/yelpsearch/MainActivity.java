@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity
                     if (mSearchResultsJSON != null) {
                         Log.d(TAG, "AsyncTaskLoader delivering cached results");
                         deliverResult(mSearchResultsJSON);
-                        finish();
+                        //finish();
                         //deliverResult(mSearchResultsJSON);
                         startActivity(getIntent());
                         //deliverResult(mSearchResultsJSON);

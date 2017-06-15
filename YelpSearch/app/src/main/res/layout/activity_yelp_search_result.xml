@@ -15,7 +15,7 @@
         android:layout_gravity="top|center_horizontal"
         android:padding="16dp"
         android:textColor="#000"
-        android:textSize="30ssp"/>
+        android:textSize="30sp"/>
 
 
     <LinearLayout
@@ -37,31 +37,22 @@
 
 
     <TextView
-        android:id="@+id/tv_search_result_stars"
+        android:id="@+id/tv_search_result_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:textSize="20dp"
-        android:textColor="#000"
         android:drawableLeft="@mipmap/ic_phonenumber"
         />
 
     <TextView
-        android:id="@+id/tv_search_result_description"
+        android:id="@+id/tv_search_result_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:textSize="20dp"
         android:drawableLeft="@mipmap/ic_ratings" />
-
-
-    <TextView
-        android:id="@+id/tv_search_result_isclosed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:textSize="20dp"/>
 
     <TextView
         android:id="@+id/tv_search_result_url"

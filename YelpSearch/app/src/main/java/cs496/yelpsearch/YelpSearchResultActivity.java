@@ -12,10 +12,9 @@ import cs496.yelpsearch.utils.YelpUtils;
 public class YelpSearchResultActivity extends AppCompatActivity {
 
     private TextView mSearchResultNameTV;
-    private TextView mSearchResultDescriptionTV;
-    private TextView mSearchResultStarsTV;
+    private TextView mSearchResultRatingTV;
+    private TextView mSearchResultPhoneTV;
     private TextView mSearchResultAddressTV;
-    private TextView mSearchResultIsClosedTV;
     private TextView mSearchResultUrlTV;
     private YelpUtils.SearchResult mSearchResult;
 
@@ -25,18 +24,17 @@ public class YelpSearchResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_yelp_search_result);
 
         mSearchResultNameTV = (TextView)findViewById(R.id.tv_search_result_name);
-        mSearchResultDescriptionTV = (TextView)findViewById(R.id.tv_search_result_description);
-        mSearchResultStarsTV = (TextView)findViewById(R.id.tv_search_result_stars);
+        mSearchResultRatingTV = (TextView)findViewById(R.id.tv_search_result_rating);
+        mSearchResultPhoneTV = (TextView)findViewById(R.id.tv_search_result_phone);
         mSearchResultAddressTV = (TextView) findViewById(R.id.tv_search_result_address);
-        mSearchResultIsClosedTV = (TextView) findViewById(R.id.tv_search_result_isclosed);
         mSearchResultUrlTV = (TextView) findViewById(R.id.tv_search_result_url);
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(YelpUtils.SearchResult.EXTRA_SEARCH_RESULT)) {
             mSearchResult = (YelpUtils.SearchResult)intent.getSerializableExtra(YelpUtils.SearchResult.EXTRA_SEARCH_RESULT);
             mSearchResultNameTV.setText(mSearchResult.name);
-            mSearchResultDescriptionTV.setText(mSearchResult.rating + " (" + mSearchResult.review_count + " reviews)");
-            mSearchResultStarsTV.setText(mSearchResult.phone);
+            mSearchResultRatingTV.setText(mSearchResult.rating + " (" + mSearchResult.review_count + " reviews)");
+            mSearchResultPhoneTV.setText(mSearchResult.phone);
 
             String img = "<a href='" + mSearchResult.image_url + "'>Image</a>";
             mSearchResultUrlTV.setClickable(true);
@@ -44,12 +42,6 @@ public class YelpSearchResultActivity extends AppCompatActivity {
             mSearchResultUrlTV.setText(Html.fromHtml(img));
 
             mSearchResultAddressTV.setText(mSearchResult.realAddress);
-            if(mSearchResult.is_closed){
-                mSearchResultIsClosedTV.setText("Open Now");
-            }
-            else {
-                mSearchResultIsClosedTV.setText("Closed Now");
-            }
 
         }
     }
