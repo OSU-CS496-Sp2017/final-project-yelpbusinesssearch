@@ -62,7 +62,7 @@ public class YelpSearchAdapter extends RecyclerView.Adapter<YelpSearchAdapter.Se
             }
 
             public void bind(YelpUtils.SearchResult searchResult) {
-                mSearchResultTV.setText(searchResult.name +" - "+searchResult.realAddress);
+                mSearchResultTV.setText("Name: " + searchResult.name + "\nAddress: "+searchResult.realAddress);
             }
 
             @Override

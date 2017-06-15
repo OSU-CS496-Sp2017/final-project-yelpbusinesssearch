@@ -14,5 +14,6 @@
     <string name="pref_limit_title">Set Location</string>
     <string name="pref_limit_default"></string>
 
+    <string name="bold_text_name">Name: </string>
 
 </resources>

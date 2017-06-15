@@ -30,5 +30,13 @@ public class homeScreen extends AppCompatActivity {
             }
         });
 
+        Button viewButton = (Button)findViewById(R.id.btn_view);
+        viewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(homeScreen.this, ViewLocalActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
