@@ -26,7 +26,7 @@ public class YelpUtils {
     private final static String YELP_SEARCH_BUSINESS_PARAM = "term";
     private final static String YELP_SEARCH_LIMIT_PARAM = "limit";
     private final static String YELP_SEARCH_IN_LOCATION = "corvallis";
-    private final static String YELP_SEARCH_LIMIT= "5";
+    private final static String YELP_SEARCH_LIMIT= "10";
 
 
 
@@ -64,7 +64,7 @@ public class YelpUtils {
             builder.appendQueryParameter(YELP_SEARCH_LIMIT_PARAM, YELP_SEARCH_LIMIT);
         }
         else {
-            builder.appendQueryParameter(YELP_SEARCH_LOCATION_PARAM, limit);
+            builder.appendQueryParameter(YELP_SEARCH_LIMIT_PARAM, limit);
         }
 
         if (!term.equals("")) {

@@ -84,10 +84,9 @@ public class ViewLocalActivity extends AppCompatActivity
         String location = sharedPreferences.getString(getString(R.string.pref_location_key),
                 getString(R.string.pref_location_default));
 
-        String limit = sharedPreferences.getString(getString(R.string.pref_limit_key),
-                getString(R.string.pref_limit_default));
+        //String limit = "25";
 
-        String YelpSearchUrl = YelpUtils.buildYelpSearchURL(searchQuery, location, limit);
+        String YelpSearchUrl = YelpUtils.buildYelpSearchURL(searchQuery, location, "25");
 
         Bundle argsBundle = new Bundle();
         argsBundle.putString(SEARCH_URL_KEY, YelpSearchUrl);
