@@ -56,9 +56,9 @@ public class ViewLocalActivity extends AppCompatActivity
 
         getSupportLoaderManager().initLoader(YELP_SEARCH_LOADER_ID, null, this);
 
-        String searchQuery = "food";
+        Intent i = getIntent();
+        String searchQuery = i.getStringExtra("term");
         doYelpSearch(searchQuery);
-
     }
 
     @Override
@@ -86,7 +86,7 @@ public class ViewLocalActivity extends AppCompatActivity
 
         //String limit = "25";
 
-        String YelpSearchUrl = YelpUtils.buildYelpSearchURL(searchQuery, location, "25");
+        String YelpSearchUrl = YelpUtils.buildYelpSearchURL(searchQuery, location, "50");
 
         Bundle argsBundle = new Bundle();
         argsBundle.putString(SEARCH_URL_KEY, YelpSearchUrl);
