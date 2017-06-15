@@ -10,10 +10,4 @@
     <string name="pref_location_title">Set Location</string>
     <string name="pref_location_default"></string>
 
-    <string name="pref_limit_key">pref_location</string>
-    <string name="pref_limit_title">Set Location</string>
-    <string name="pref_limit_default"></string>
-
-    <string name="bold_text_name">Name: </string>
-
 </resources>

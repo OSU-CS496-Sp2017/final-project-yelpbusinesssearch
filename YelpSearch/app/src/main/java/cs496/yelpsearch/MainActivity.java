@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View;
+import android.support.v4.app.Fragment;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -90,13 +91,11 @@ public class MainActivity extends AppCompatActivity
 
     private void doYelpSearch(String searchQuery) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
         String location = sharedPreferences.getString(getString(R.string.pref_location_key),
                 getString(R.string.pref_location_default));
 
-        String limit = sharedPreferences.getString(getString(R.string.pref_limit_key),
-                getString(R.string.pref_limit_default));
-
-        String YelpSearchUrl = YelpUtils.buildYelpSearchURL(searchQuery, location, limit);
+        String YelpSearchUrl = YelpUtils.buildYelpSearchURL(searchQuery, location, "10");
 
         Bundle argsBundle = new Bundle();
         argsBundle.putString(SEARCH_URL_KEY, YelpSearchUrl);
