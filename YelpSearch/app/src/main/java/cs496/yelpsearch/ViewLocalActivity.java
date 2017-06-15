@@ -44,6 +44,9 @@ public class ViewLocalActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_local);
 
+        Intent i = getIntent();
+        String searchQuery = i.getStringExtra("term");
+
         mLoadingIndicatorPB = (ProgressBar)findViewById(R.id.pb_loading_indicator);
         mLoadingErrorMessageTV = (TextView)findViewById(R.id.tv_loading_error_message);
         mSearchResultsRV = (RecyclerView)findViewById(R.id.rv_search_results);
@@ -56,8 +59,6 @@ public class ViewLocalActivity extends AppCompatActivity
 
         getSupportLoaderManager().initLoader(YELP_SEARCH_LOADER_ID, null, this);
 
-        Intent i = getIntent();
-        String searchQuery = i.getStringExtra("term");
         doYelpSearch(searchQuery);
     }
 
@@ -84,8 +85,6 @@ public class ViewLocalActivity extends AppCompatActivity
         String location = sharedPreferences.getString(getString(R.string.pref_location_key),
                 getString(R.string.pref_location_default));
 
-        //String limit = "25";
-
         String YelpSearchUrl = YelpUtils.buildYelpSearchURL(searchQuery, location, "50");
 
         Bundle argsBundle = new Bundle();
@@ -108,14 +107,14 @@ public class ViewLocalActivity extends AppCompatActivity
 
             @Override
             protected void onStartLoading() {
-                if (args != null) {
-                    if (mSearchResultsJSON != null) {
-                        Log.d(TAG, "AsyncTaskLoader delivering cached results");
-                        deliverResult(mSearchResultsJSON);
-                    } else {
-                        mLoadingIndicatorPB.setVisibility(View.VISIBLE);
-                        forceLoad();
-                    }
+                if (mSearchResultsJSON != null) {
+                    Log.d(TAG, "AsyncTaskLoader delivering cached results");
+                    deliverResult(mSearchResultsJSON);
+                    finish();
+                    startActivity(getIntent());
+                } else {
+                    mLoadingIndicatorPB.setVisibility(View.VISIBLE);
+                    forceLoad();
                 }
             }
 

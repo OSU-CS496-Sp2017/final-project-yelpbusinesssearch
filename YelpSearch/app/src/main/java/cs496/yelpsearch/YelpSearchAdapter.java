@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import cs496.yelpsearch.utils.YelpUtils;
@@ -54,15 +56,20 @@ public class YelpSearchAdapter extends RecyclerView.Adapter<YelpSearchAdapter.Se
 
         class SearchResultViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             private TextView mSearchResultTV;
+            private TextView mName;
 
             public SearchResultViewHolder(View itemView) {
                 super(itemView);
+
+                mName = (TextView)itemView.findViewById(R.id.tv_name);
                 mSearchResultTV = (TextView)itemView.findViewById(R.id.tv_search_result);
                 itemView.setOnClickListener(this);
             }
 
             public void bind(YelpUtils.SearchResult searchResult) {
-                mSearchResultTV.setText("Name: " + searchResult.name + "\nAddress: "+searchResult.realAddress);
+
+                mName.setText(searchResult.name);
+                mSearchResultTV.setText(searchResult.realAddress + "\nRating: " + searchResult.rating);
             }
 
             @Override
